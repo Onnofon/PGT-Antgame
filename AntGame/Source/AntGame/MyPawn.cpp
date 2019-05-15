@@ -97,7 +97,8 @@ void AMyPawn::Tick(float DeltaTime)
 	//OurVisibleComponent->SetWorldScale3D(FVector(CurrentScale));
 
 	if (!CurrentVelocity.IsZero()) {
-		FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime);
+		FVector NewRotation = MovingBackwards * GetActorForwardVector();
+		FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime) + (NewRotation * 10.f);
 		SetActorLocation(NewLocation);
 	}
 	if (MyTimeline != nullptr) MyTimeline->TickComponent(DeltaTime, ELevelTick::LEVELTICK_TimeOnly, nullptr);
@@ -106,11 +107,10 @@ void AMyPawn::Tick(float DeltaTime)
 	FRotator newYaw = GetActorRotation();
 	newYaw.Yaw += mouseInput.X;
 	SetActorRotation(newYaw);
+
 	FRotator newPitch = springArm->GetComponentRotation();
-
-	newPitch.Pitch = FMath::Clamp(newPitch.Pitch + mouseInput.Y, -80.f, 0.f);
+	newPitch.Pitch = FMath::Clamp(newPitch.Pitch + mouseInput.Y, -80.f, 80.f);
 	springArm->SetWorldRotation(newPitch);
-
 }
 
 // Called to bind functionality to input
@@ -120,20 +120,25 @@ void AMyPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	InputComponent->BindAction("Command_Follow", IE_Pressed, this, &AMyPawn::CommandFollow);
 	InputComponent->BindAction("Grow", IE_Pressed, this, &AMyPawn::StartGrowing);
 	InputComponent->BindAction("Grow", IE_Released, this, &AMyPawn::StopGrowing);
+	InputComponent->BindAction("MoveBackwards", IE_Pressed, this, &AMyPawn::MoveBackwards);
+	InputComponent->BindAction("MoveBackwards", IE_Released, this, &AMyPawn::MoveBackwardsOff);
 
-	InputComponent->BindAxis("MoveX", this, &AMyPawn::Move_XAxis);
-	InputComponent->BindAxis("MoveY", this, &AMyPawn::Move_YAxis);
+	InputComponent->BindAxis("MoveForwards", this, &AMyPawn::MoveForwards);
 	InputComponent->BindAxis("MouseYaw", this, &AMyPawn::MouseYaw);
 	InputComponent->BindAxis("MousePitch", this, &AMyPawn::MousPitch);
 }
 
-void AMyPawn::Move_XAxis(float AxisValue) {
+void AMyPawn::MoveForwards(float AxisValue) {
 	CurrentVelocity.X = FMath::Clamp(AxisValue, -1.0f, 1.0f) * 100.0f;
 }
-
-void AMyPawn::Move_YAxis(float AxisValue) {
-	CurrentVelocity.Y = FMath::Clamp(AxisValue, -1.0f, 1.0f) * 100.0f;
+void AMyPawn::MoveBackwards() {
+	MovingBackwards = -1;
 }
+
+void AMyPawn::MoveBackwardsOff() {
+	MovingBackwards = 1;
+}
+
 
 /*void AMyPawn::Tick(float DeltaTime) 
 {

@@ -43,8 +43,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		UPawnNoiseEmitterComponent* PawnNoiseEmitterComp;
 
-	void Move_XAxis(float AxisValue);
-	void Move_YAxis(float AxisValue);
+	void MoveForwards(float AxisValue);
+	void MoveBackwards();
+	void MoveBackwardsOff();
 	void StartGrowing();
 	void StopGrowing();
 	void GainResources();
@@ -57,9 +58,14 @@ public:
 		int numberFollowingAnts;
 
 	FVector2D mouseInput;
+	FRotator newYaw;
+	FRotator newPitch;
 
 	FVector CurrentVelocity;
 	bool bGrowing;
+
+	UPROPERTY(EditAnywhere)
+		int MovingBackwards = 1;
 
 	//Create values for the resources & the way to integrate them in the UI
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
@@ -72,11 +78,11 @@ public:
 		USpringArmComponent* springArm;
 	UCameraComponent* camera;
 
-	/*UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere)
 		USceneComponent* MeshRoot;
 
-	UPROPERTY(EditAnywhere)
-		UStaticMeshComponent* mesh;	*/	
+	//UPROPERTY(EditAnywhere)
+	//	UStaticMeshComponent* mesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 		float HealthPercentage;
