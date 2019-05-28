@@ -47,7 +47,7 @@ public:
 
 
 	UPROPERTY(VisibleAnywhere)
-		USceneComponent* OurVisibleComponent;
+		UStaticMeshComponent* OurVisibleComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		UPawnNoiseEmitterComponent* PawnNoiseEmitterComp;

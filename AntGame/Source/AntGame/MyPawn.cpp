@@ -1,4 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
+#define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1,1.5, FColor::Cyan, text)
 #define printf(text, fstring)  if(GEngine) GEngine->AddOnScreenDebugMessage(-1,1.5, FColor::Green, FString::Printf(TEXT(text), fstring))
 
 #include "MyPawn.h"
@@ -30,9 +31,9 @@ AMyPawn::AMyPawn()
 	//OurCamera->SetupAttachment(RootComponent);
 	//OurCamera->SetRelativeLocation(FVector(-250.0f, 0.0f, 250.0f));
 	//OurCamera->SetRelativeRotation(FRotator(-45.0f, 0.0f, 0.0f));
-	OurVisibleComponent->SetupAttachment(RootComponent);
+	//OurVisibleComponent->SetupAttachment(RootComponent);
 	
-
+	RootComponent = OurVisibleComponent;
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -41,7 +42,6 @@ AMyPawn::AMyPawn()
 	//mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 
 	//MeshRoot = CreateDefaultSubobject<USceneComponent>(TEXT("MeshRoot"));
-	//RootComponent = MeshRoot;
 
 	springArm->AttachTo(RootComponent);
 	springArm->TargetArmLength = 350.f;
@@ -103,30 +103,6 @@ void AMyPawn::Tick(float DeltaTime)
 		FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime) + (NewRotation * 10.f);
 		SetActorLocation(NewLocation);
 	}
-	FVector JumpLocation = GetActorLocation();
-
-	
-	/* if (bDo && JumpLocation.Z < 300 && !MaxJumpHeightReached) {
-		jumpAdjust -= (DeltaTime * 0.3f);
-		JumpLocation.Z += (DeltaTime * (100.0f * jumpAdjust));
-		SetActorLocation(JumpLocation);
-
-		if (JumpLocation.Z >= 300) {
-			MaxJumpHeightReached = true;
-		}
-	}
-
-	if (bDo && MaxJumpHeightReached) {
-		jumpAdjust += (DeltaTime * 0.3f);
-		JumpLocation.Z -= (DeltaTime * (100.0f * jumpAdjust));          // Dit werkt niet met physics ofzo, dus als we verschillende hoogtes hebben werkt dit ofcourse voor geen ene meter.
-		SetActorLocation(JumpLocation);
-
-		if (JumpLocation.Z <= 40) {
-			bDo = false;
-			MaxJumpHeightReached = false;
-			jumpAdjust = 3.0f;
-		}
-	} */
 
 	if (MyTimeline != nullptr) MyTimeline->TickComponent(DeltaTime, ELevelTick::LEVELTICK_TimeOnly, nullptr);
 
@@ -169,13 +145,14 @@ void AMyPawn::MoveBackwardsOff() {
 	MovingBackwards = 1;
 }
 
-void AMyPawn::OnStartJump() {
-	/*if (!bDo) {
-		bDo = true;
-	}*/
-
-	// ACharacter::Jump();   <---- Dit is wat ingebouwd zit in unreal, maar dit is dus wat nooit werkt.
+void AMyPawn::OnStartJump() 
+{
+	FName Bone;
+	print("JUMP");
+	FVector ForceToAdd = FVector(0, 0, 100) * 2 * 2;
+	OurVisibleComponent->AddImpulse(ForceToAdd, Bone ,true);
 }
+
 
 void AMyPawn::OnStopJump() {
 	ACharacter::StopJumping();
