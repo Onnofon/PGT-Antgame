@@ -29,6 +29,15 @@ protected:
 	
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser);
 
+	float jumpAdjust = 3.0f;
+
+	bool bDo;
+	bool MaxJumpHeightReached;
+
+	// void myDoOnce();
+
+	// void resetMyDoOnce();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -37,7 +46,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere)
 		USceneComponent* OurVisibleComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
@@ -53,6 +62,12 @@ public:
 	void CommandFollow();
 	void MouseYaw(float axis);
 	void MousPitch(float axis);
+
+	UFUNCTION()
+		void OnStartJump();
+
+	UFUNCTION()
+		void OnStopJump();
 
 	UPROPERTY(EditAnywhere)
 		int numberFollowingAnts;

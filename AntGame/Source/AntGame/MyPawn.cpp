@@ -20,6 +20,7 @@ AMyPawn::AMyPawn()
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
+	
 
 	PawnNoiseEmitterComp = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("PawnNoiseEmitterComp"));
 
@@ -30,6 +31,7 @@ AMyPawn::AMyPawn()
 	//OurCamera->SetRelativeLocation(FVector(-250.0f, 0.0f, 250.0f));
 	//OurCamera->SetRelativeRotation(FRotator(-45.0f, 0.0f, 0.0f));
 	OurVisibleComponent->SetupAttachment(RootComponent);
+	
 
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -101,6 +103,31 @@ void AMyPawn::Tick(float DeltaTime)
 		FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime) + (NewRotation * 10.f);
 		SetActorLocation(NewLocation);
 	}
+	FVector JumpLocation = GetActorLocation();
+
+	
+	/* if (bDo && JumpLocation.Z < 300 && !MaxJumpHeightReached) {
+		jumpAdjust -= (DeltaTime * 0.3f);
+		JumpLocation.Z += (DeltaTime * (100.0f * jumpAdjust));
+		SetActorLocation(JumpLocation);
+
+		if (JumpLocation.Z >= 300) {
+			MaxJumpHeightReached = true;
+		}
+	}
+
+	if (bDo && MaxJumpHeightReached) {
+		jumpAdjust += (DeltaTime * 0.3f);
+		JumpLocation.Z -= (DeltaTime * (100.0f * jumpAdjust));          // Dit werkt niet met physics ofzo, dus als we verschillende hoogtes hebben werkt dit ofcourse voor geen ene meter.
+		SetActorLocation(JumpLocation);
+
+		if (JumpLocation.Z <= 40) {
+			bDo = false;
+			MaxJumpHeightReached = false;
+			jumpAdjust = 3.0f;
+		}
+	} */
+
 	if (MyTimeline != nullptr) MyTimeline->TickComponent(DeltaTime, ELevelTick::LEVELTICK_TimeOnly, nullptr);
 
 	Super::Tick(DeltaTime);
@@ -117,11 +144,14 @@ void AMyPawn::Tick(float DeltaTime)
 void AMyPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(InputComponent);
+	check(InputComponent)
 	InputComponent->BindAction("Command_Follow", IE_Pressed, this, &AMyPawn::CommandFollow);
 	InputComponent->BindAction("Grow", IE_Pressed, this, &AMyPawn::StartGrowing);
 	InputComponent->BindAction("Grow", IE_Released, this, &AMyPawn::StopGrowing);
 	InputComponent->BindAction("MoveBackwards", IE_Pressed, this, &AMyPawn::MoveBackwards);
 	InputComponent->BindAction("MoveBackwards", IE_Released, this, &AMyPawn::MoveBackwardsOff);
+	InputComponent->BindAction("Jump", IE_Pressed, this, &AMyPawn::OnStartJump);    // &AMyPawn::OnStartJump kan ook &ACharacter::Jump voor die ingebouwde shizzle
+	// InputComponent->BindAction("Jump", IE_Released, this, &AMyPawn::OnStopJump);
 
 	InputComponent->BindAxis("MoveForwards", this, &AMyPawn::MoveForwards);
 	InputComponent->BindAxis("MouseYaw", this, &AMyPawn::MouseYaw);
@@ -139,6 +169,17 @@ void AMyPawn::MoveBackwardsOff() {
 	MovingBackwards = 1;
 }
 
+void AMyPawn::OnStartJump() {
+	/*if (!bDo) {
+		bDo = true;
+	}*/
+
+	// ACharacter::Jump();   <---- Dit is wat ingebouwd zit in unreal, maar dit is dus wat nooit werkt.
+}
+
+void AMyPawn::OnStopJump() {
+	ACharacter::StopJumping();
+}
 
 /*void AMyPawn::Tick(float DeltaTime) 
 {
