@@ -114,6 +114,15 @@ void AMyPawn::Tick(float DeltaTime)
 	FRotator newPitch = springArm->GetComponentRotation();
 	newPitch.Pitch = FMath::Clamp(newPitch.Pitch + mouseInput.Y, -80.f, 80.f);
 	springArm->SetWorldRotation(newPitch);
+
+	if (jumped) {
+		jumpTime += 1;
+
+		if (jumpTime >= 50) {
+			jumped = false;
+			jumpTime = 0;
+		};
+	};
 }
 
 // Called to bind functionality to input
@@ -126,8 +135,7 @@ void AMyPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	InputComponent->BindAction("Grow", IE_Released, this, &AMyPawn::StopGrowing);
 	InputComponent->BindAction("MoveBackwards", IE_Pressed, this, &AMyPawn::MoveBackwards);
 	InputComponent->BindAction("MoveBackwards", IE_Released, this, &AMyPawn::MoveBackwardsOff);
-	InputComponent->BindAction("Jump", IE_Pressed, this, &AMyPawn::OnStartJump);    // &AMyPawn::OnStartJump kan ook &ACharacter::Jump voor die ingebouwde shizzle
-	// InputComponent->BindAction("Jump", IE_Released, this, &AMyPawn::OnStopJump);
+	InputComponent->BindAction("Jump", IE_Pressed, this, &AMyPawn::OnStartJump);
 
 	InputComponent->BindAxis("MoveForwards", this, &AMyPawn::MoveForwards);
 	InputComponent->BindAxis("MouseYaw", this, &AMyPawn::MouseYaw);
@@ -147,15 +155,12 @@ void AMyPawn::MoveBackwardsOff() {
 
 void AMyPawn::OnStartJump() 
 {
-	FName Bone;
-	print("JUMP");
-	FVector ForceToAdd = FVector(0, 0, 100) * 2 * 2;
-	OurVisibleComponent->AddImpulse(ForceToAdd, Bone ,true);
-}
-
-
-void AMyPawn::OnStopJump() {
-	ACharacter::StopJumping();
+	if (!jumped) {
+		jumped = true;
+		FName Bone;
+		FVector ForceToAdd = FVector(0, 0, 100) * 2 * 2;
+		OurVisibleComponent->AddImpulse(ForceToAdd, Bone, true);
+	}
 }
 
 /*void AMyPawn::Tick(float DeltaTime) 

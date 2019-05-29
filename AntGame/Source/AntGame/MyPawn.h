@@ -29,14 +29,8 @@ protected:
 	
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser);
 
-	float jumpAdjust = 3.0f;
-
-	bool bDo;
-	bool MaxJumpHeightReached;
-
-	// void myDoOnce();
-
-	// void resetMyDoOnce();
+	bool jumped;
+	int jumpTime = 0;
 
 public:	
 	// Called every frame
@@ -65,9 +59,6 @@ public:
 
 	UFUNCTION()
 		void OnStartJump();
-
-	UFUNCTION()
-		void OnStopJump();
 
 	UPROPERTY(EditAnywhere)
 		int numberFollowingAnts;
