@@ -27,6 +27,12 @@ protected:
 	virtual void NextStage();
 
 public:	
+
+	UPROPERTY(EditAnywhere)
+		int minTime;
+	UPROPERTY(EditAnywhere)
+		int maxTime;
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 

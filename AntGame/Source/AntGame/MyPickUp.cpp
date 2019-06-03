@@ -9,19 +9,19 @@
 AMyPickUp::AMyPickUp()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	// PrimaryActorTick.bCanEverTick = true;
 
-	PickupRoot = CreateDefaultSubobject<USceneComponent>(TEXT("PickupRoot"));
-	RootComponent = PickupRoot;
+	// PickupRoot = CreateDefaultSubobject<USceneComponent>(TEXT("PickupRoot"));
+	// RootComponent = PickupRoot;
 
-	PickupMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PickupMesh"));
-	PickupMesh->AttachToComponent(PickupRoot, FAttachmentTransformRules::SnapToTargetNotIncludingScale); //no scale
+	// PickupMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PickupMesh"));
+	// PickupMesh->AttachToComponent(PickupRoot, FAttachmentTransformRules::SnapToTargetNotIncludingScale); //no scale
 	
-	PickupBox = CreateDefaultSubobject<UBoxComponent>(TEXT("PickupBox"));
-	PickupBox->SetWorldScale3D(FVector(1.0f, 1.0f, 1.0f));
+	// PickupBox = CreateDefaultSubobject<UBoxComponent>(TEXT("PickupBox"));
+	// PickupBox->SetWorldScale3D(FVector(1.0f, 1.0f, 1.0f));
 	//PickupBox->bGenerateOverlapEvents = true;
-	PickupBox->OnComponentBeginOverlap.AddDynamic(this, &AMyPickUp::OnPlayerEnterPickupBox);
-	PickupBox->AttachToComponent(PickupRoot, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+	// PickupBox->OnComponentBeginOverlap.AddDynamic(this, &AMyPickUp::OnPlayerEnterPickupBox);
+	// PickupBox->AttachToComponent(PickupRoot, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 }
 
 // Called when the game starts or when spawned

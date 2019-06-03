@@ -29,6 +29,9 @@ protected:
 	
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser);
 
+	bool jumped;
+	int jumpTime = 0;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -37,14 +40,15 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
-	UPROPERTY(EditAnywhere)
-		USceneComponent* OurVisibleComponent;
+	UPROPERTY(VisibleAnywhere)
+		UStaticMeshComponent* OurVisibleComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		UPawnNoiseEmitterComponent* PawnNoiseEmitterComp;
 
-	void Move_XAxis(float AxisValue);
-	void Move_YAxis(float AxisValue);
+	void MoveForwards(float AxisValue);
+	void MoveBackwards();
+	void MoveBackwardsOff();
 	void StartGrowing();
 	void StopGrowing();
 	void GainResources();
@@ -53,13 +57,21 @@ public:
 	void MouseYaw(float axis);
 	void MousPitch(float axis);
 
+	UFUNCTION()
+		void OnStartJump();
+
 	UPROPERTY(EditAnywhere)
 		int numberFollowingAnts;
 
 	FVector2D mouseInput;
+	FRotator newYaw;
+	FRotator newPitch;
 
 	FVector CurrentVelocity;
 	bool bGrowing;
+
+	UPROPERTY(EditAnywhere)
+		int MovingBackwards = 1;
 
 	//Create values for the resources & the way to integrate them in the UI
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
@@ -72,11 +84,11 @@ public:
 		USpringArmComponent* springArm;
 	UCameraComponent* camera;
 
-	/*UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere)
 		USceneComponent* MeshRoot;
 
-	UPROPERTY(EditAnywhere)
-		UStaticMeshComponent* mesh;	*/	
+	//UPROPERTY(EditAnywhere)
+	//	UStaticMeshComponent* mesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 		float HealthPercentage;

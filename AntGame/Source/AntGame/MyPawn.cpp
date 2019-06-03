@@ -1,4 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
+#define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1,1.5, FColor::Cyan, text)
 #define printf(text, fstring)  if(GEngine) GEngine->AddOnScreenDebugMessage(-1,1.5, FColor::Green, FString::Printf(TEXT(text), fstring))
 
 #include "MyPawn.h"
@@ -20,6 +21,7 @@ AMyPawn::AMyPawn()
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
+	
 
 	PawnNoiseEmitterComp = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("PawnNoiseEmitterComp"));
 
@@ -29,8 +31,9 @@ AMyPawn::AMyPawn()
 	//OurCamera->SetupAttachment(RootComponent);
 	//OurCamera->SetRelativeLocation(FVector(-250.0f, 0.0f, 250.0f));
 	//OurCamera->SetRelativeRotation(FRotator(-45.0f, 0.0f, 0.0f));
-	OurVisibleComponent->SetupAttachment(RootComponent);
-
+	//OurVisibleComponent->SetupAttachment(RootComponent);
+	
+	RootComponent = OurVisibleComponent;
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -39,7 +42,6 @@ AMyPawn::AMyPawn()
 	//mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 
 	//MeshRoot = CreateDefaultSubobject<USceneComponent>(TEXT("MeshRoot"));
-	//RootComponent = MeshRoot;
 
 	springArm->AttachTo(RootComponent);
 	springArm->TargetArmLength = 350.f;
@@ -93,46 +95,81 @@ void AMyPawn::Tick(float DeltaTime)
 		CurrentScale -= (DeltaTime * 0.5f);
 	}
 
+	if (numberFollowingAnts >= 2)
+	{
+		OurVisibleComponent->SetMassOverrideInKg("", 1000000009.0, true);
+	}
+	else
+	{
+		OurVisibleComponent->SetMassOverrideInKg("", 999999, true);
+	}
+
 	CurrentScale = FMath::Clamp(CurrentScale, 1.0f, 2.0f);
 	//OurVisibleComponent->SetWorldScale3D(FVector(CurrentScale));
 
 	if (!CurrentVelocity.IsZero()) {
-		FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime);
+		FVector NewRotation = MovingBackwards * GetActorForwardVector();
+		FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime) + (NewRotation * 10.f);
 		SetActorLocation(NewLocation);
 	}
+
 	if (MyTimeline != nullptr) MyTimeline->TickComponent(DeltaTime, ELevelTick::LEVELTICK_TimeOnly, nullptr);
 
 	Super::Tick(DeltaTime);
 	FRotator newYaw = GetActorRotation();
 	newYaw.Yaw += mouseInput.X;
 	SetActorRotation(newYaw);
-	FRotator newPitch = springArm->GetComponentRotation();
 
-	newPitch.Pitch = FMath::Clamp(newPitch.Pitch + mouseInput.Y, -80.f, 0.f);
+	FRotator newPitch = springArm->GetComponentRotation();
+	newPitch.Pitch = FMath::Clamp(newPitch.Pitch + mouseInput.Y, -80.f, 80.f);
 	springArm->SetWorldRotation(newPitch);
 
+	if (jumped) {
+		jumpTime += 1;
+
+		if (jumpTime >= 50) {
+			jumped = false;
+			jumpTime = 0;
+		};
+	};
 }
 
 // Called to bind functionality to input
 void AMyPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(InputComponent);
+	check(InputComponent)
 	InputComponent->BindAction("Command_Follow", IE_Pressed, this, &AMyPawn::CommandFollow);
 	InputComponent->BindAction("Grow", IE_Pressed, this, &AMyPawn::StartGrowing);
 	InputComponent->BindAction("Grow", IE_Released, this, &AMyPawn::StopGrowing);
+	InputComponent->BindAction("MoveBackwards", IE_Pressed, this, &AMyPawn::MoveBackwards);
+	InputComponent->BindAction("MoveBackwards", IE_Released, this, &AMyPawn::MoveBackwardsOff);
+	InputComponent->BindAction("Jump", IE_Pressed, this, &AMyPawn::OnStartJump);
 
-	InputComponent->BindAxis("MoveX", this, &AMyPawn::Move_XAxis);
-	InputComponent->BindAxis("MoveY", this, &AMyPawn::Move_YAxis);
+	InputComponent->BindAxis("MoveForwards", this, &AMyPawn::MoveForwards);
 	InputComponent->BindAxis("MouseYaw", this, &AMyPawn::MouseYaw);
 	InputComponent->BindAxis("MousePitch", this, &AMyPawn::MousPitch);
 }
 
-void AMyPawn::Move_XAxis(float AxisValue) {
+void AMyPawn::MoveForwards(float AxisValue) {
 	CurrentVelocity.X = FMath::Clamp(AxisValue, -1.0f, 1.0f) * 100.0f;
 }
+void AMyPawn::MoveBackwards() {
+	MovingBackwards = -1;
+}
 
-void AMyPawn::Move_YAxis(float AxisValue) {
-	CurrentVelocity.Y = FMath::Clamp(AxisValue, -1.0f, 1.0f) * 100.0f;
+void AMyPawn::MoveBackwardsOff() {
+	MovingBackwards = 1;
+}
+
+void AMyPawn::OnStartJump() 
+{
+	if (!jumped) {
+		jumped = true;
+		FName Bone;
+		FVector ForceToAdd = FVector(0, 0, 100) * 2 * 2;
+		OurVisibleComponent->AddImpulse(ForceToAdd, Bone, true);
+	}
 }
 
 /*void AMyPawn::Tick(float DeltaTime) 
