@@ -19,6 +19,8 @@ class ANTGAME_API AAntAiController : public AAIController
 	FName LocationToGoKey;
 	UPROPERTY(EditDefaultsOnly, Category = AI)
 	FName PlayerKey;
+	UPROPERTY(EditDefaultsOnly, Category = AI)
+		FName BridgeKey;
 
 	/*
 	Array for the waypoints for the pathfinding

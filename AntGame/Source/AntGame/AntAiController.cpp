@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #define printf(text, fstring)  if(GEngine) GEngine->AddOnScreenDebugMessage(-1,1.5, FColor::Green, FString::Printf(TEXT(text), fstring))
+#define print(text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1,1.5, FColor::Cyan, text)
 
 #include "AntAiController.h"
 #include "AntAI.h"
@@ -18,6 +19,7 @@ AAntAiController::AAntAiController()
 
 	//Initialize Keys
 	PlayerKey = "Target";
+	BridgeKey = "BridgeTarget";
 	LocationToGoKey = "LocationToGo";
 	CurrentPatrolPoint = 0;
 }
@@ -51,7 +53,16 @@ void AAntAiController::CommandLeavePlayer(APawn * Pawn)
 	if (BlackboardComp)
 	{
 		//Set the playerkey in the blackboard to NULL If PlayerKey is NULL behavior tree goes back to waypoint following
-		BlackboardComp->SetValueAsObject(PlayerKey, NULL);
+
+		if (Player->closeByRiver) {
+			BlackboardComp->SetValueAsObject(PlayerKey, NULL);
+			BlackboardComp->SetValueAsVector(BridgeKey, FVector(1600.0f, 270.0f, 30.0f));
+			print("hellooo, river");
+		}
+		else {
+			BlackboardComp->SetValueAsObject(PlayerKey, NULL);
+			print("No river, byee");
+		}
 		//Decrement numberFollowingAnts for interaction with obstacles in game
 		Player->numberFollowingAnts--;
 	}
