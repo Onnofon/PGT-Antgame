@@ -63,6 +63,9 @@ public:
 	UPROPERTY(EditAnywhere)
 		int numberFollowingAnts;
 
+	UPROPERTY(EditAnywhere)
+		bool closeByRiver = false;
+
 	FVector2D mouseInput;
 	FRotator newYaw;
 	FRotator newPitch;
@@ -171,9 +174,5 @@ public:
 		
 	UFUNCTION(BlueprintCallable, Category = "Health")
 		void UpdateHealth(float HealthChange);
-
-
-
-
 
 };	

@@ -104,6 +104,8 @@ void AMyPawn::Tick(float DeltaTime)
 		SetActorLocation(NewLocation);
 	}
 
+	// if ()
+
 	if (MyTimeline != nullptr) MyTimeline->TickComponent(DeltaTime, ELevelTick::LEVELTICK_TimeOnly, nullptr);
 
 	Super::Tick(DeltaTime);
@@ -158,7 +160,7 @@ void AMyPawn::OnStartJump()
 	if (!jumped) {
 		jumped = true;
 		FName Bone;
-		FVector ForceToAdd = FVector(0, 0, 100) * 2 * 2;
+		FVector ForceToAdd = FVector(0, 0, 130) * 2 * 2;
 		OurVisibleComponent->AddImpulse(ForceToAdd, Bone, true);
 	}
 }
