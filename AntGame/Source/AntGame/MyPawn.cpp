@@ -11,6 +11,7 @@
 #include "Components/TimelineComponent.h"
 #include <Runtime/Engine/Classes/Components/PawnNoiseEmitterComponent.h>
 #include "AntAI.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -117,7 +118,7 @@ void AMyPawn::Tick(float DeltaTime)
 
 	if (MyTimeline != nullptr) MyTimeline->TickComponent(DeltaTime, ELevelTick::LEVELTICK_TimeOnly, nullptr);
 
-	Super::Tick(DeltaTime);
+	// Super::Tick(DeltaTime);
 	FRotator newYaw = GetActorRotation();
 	newYaw.Yaw += mouseInput.X;
 	SetActorRotation(newYaw);
@@ -300,7 +301,7 @@ bool AMyPawn::PlayFlash()
 	return false;
 }
 
-float AMyPawn::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser)
+float AMyPawn::TakeDamage(float DamageAmount)
 {
 	bCanBeDamaged = false;
 	RedFlash = true;
@@ -311,9 +312,33 @@ float AMyPawn::TakeDamage(float DamageAmount, struct FDamageEvent const & Damage
 
 void AMyPawn::UpdateHealth(float HealthChange)
 {
+	UWorld* TheWorld = GetWorld();
+
 	Health += HealthChange;
 	Health = FMath::Clamp(Health, 0.0f, FullHealth);
 	HealthPercentage = Health / FullHealth;
+
+	if (Health <= 0)
+	{
+		FString CurrentLevel = TheWorld->GetMapName();
+
+		if (CurrentLevel == "UEDPIE_0_Level_One")
+		{
+			UGameplayStatics::OpenLevel(GetWorld(), "Level_One", true);
+		}
+		else if (CurrentLevel == "UEDPIE_0_Level_Two")
+		{
+			UGameplayStatics::OpenLevel(GetWorld(), "Level_Two", true);
+		}
+		else if (CurrentLevel == "UEDPIE_0_Level_Three")
+		{
+			UGameplayStatics::OpenLevel(GetWorld(), "Level_Three", true);
+		}
+		else if (CurrentLevel == "UEDPIE_0_Tutorial")
+		{
+			UGameplayStatics::OpenLevel(GetWorld(), "Tutorial", true);
+		};
+	};
 }
 
 void AMyPawn::UpdateResources()

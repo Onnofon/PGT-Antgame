@@ -27,7 +27,7 @@ protected:
 
 	//virtual void Tick(float DeltaTime) override;
 	
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser);
+
 
 	bool jumped;
 	int jumpTime = 0;
@@ -174,5 +174,8 @@ public:
 		
 	UFUNCTION(BlueprintCallable, Category = "Health")
 		void UpdateHealth(float HealthChange);
+
+	UFUNCTION()
+		virtual float TakeDamage(float DamageAmount);
 
 };	
