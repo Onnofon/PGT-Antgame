@@ -8,6 +8,7 @@
 #include "Particles/ParticleSystem.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
+#include "Runtime/Engine/Classes/Components/PostProcessComponent.h"
 
 int delay;
 int NextCycle;
@@ -18,6 +19,7 @@ AWeatherCycle::AWeatherCycle()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	RainParticles = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("ParticleSystemComponent"));
+	RainDrops = CreateDefaultSubobject<UPostProcessComponent>(TEXT("PostProcessComponent"));
 
 }
 
@@ -40,13 +42,14 @@ void AWeatherCycle::Sun() {
 	DynamicMaterial->SetScalarParameterValue(TEXT("CurrentStage"), 1);
 	delay = FMath::FRandRange(1000, 2500);
 	RainParticles->SetVisibility(false);
-	
+	RainDrops->Deactivate();
 }
 
 void AWeatherCycle::Rain() {
 	DynamicMaterial->SetScalarParameterValue(TEXT("CurrentStage"), 0);
 	delay = FMath::FRandRange(800, 1600);
 	RainParticles->SetVisibility(true);
+	RainDrops->Activate();
 	//set rain to active
 
 }

@@ -33,6 +33,9 @@ public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Weather)
 		class UParticleSystemComponent* RainParticles;
 
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Weather)
+		class UPostProcessComponent* RainDrops;
+
 private:
 	UMaterialInstanceDynamic* DynamicMaterial;
 
