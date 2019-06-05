@@ -40,14 +40,16 @@ void AWeatherCycle::BeginPlay()
 
 void AWeatherCycle::Sun() {
 	DynamicMaterial->SetScalarParameterValue(TEXT("CurrentStage"), 1);
-	delay = FMath::FRandRange(1000, 2500);
+	delay = FMath::FRandRange(minTime, maxTime);
+	RainParticles->SetVisibility(false);
 	Global::Raining = false;
 
 }
 
 void AWeatherCycle::Rain() {
 	DynamicMaterial->SetScalarParameterValue(TEXT("CurrentStage"), 0);
-	delay = FMath::FRandRange(800, 1600);
+	delay = FMath::FRandRange(minTime, maxTime);
+	RainParticles->SetVisibility(true);
 	Global::Raining = true;
 }
 

@@ -21,7 +21,7 @@ void AResources1::OnOverlap(AActor* MyOverlappedActor, AActor* OtherActor)
 		if (MyCharacter && MyCharacter->GetResources() < 1.0f)
 		{
 			//100 is the value that gets added to the resources.
-			MyCharacter->SetResourcesChange(100.0f);
+			MyCharacter->SetResourcesChange(25.0f);
 			Destroy();
 		}
 	}
