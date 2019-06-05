@@ -96,7 +96,7 @@ void AMyPawn::Tick(float DeltaTime)
 		CurrentScale -= (DeltaTime * 0.5f);
 	}
 
-	if (numberFollowingAnts >= 2)
+	if (numberFollowingAnts >= 1)
 	{
 		OurVisibleComponent->SetMassOverrideInKg("", 1000000009.0, true);
 	}
