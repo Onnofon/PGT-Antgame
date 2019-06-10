@@ -1,4 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/// <summary>
+/// Objects for spawning the Ant AI blueprints for populating the world
+/// </summary>
 
 #pragma once
 #include "AntAI.h"

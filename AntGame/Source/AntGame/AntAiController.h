@@ -1,5 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+/// <summary>
+/// Brain class for the Ant AI communicates with the behavior tree
+/// </summary>
 #pragma once
 
 #include "CoreMinimal.h"

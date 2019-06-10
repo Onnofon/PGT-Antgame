@@ -2,7 +2,11 @@
 
 #include "MoveAbleRock.h"
 #include <Runtime/Engine/Classes/Components/StaticMeshComponent.h>
-// Sets default values
+
+/**
+ * @brief 
+ * Default values of rock set here
+ */
 AMoveAbleRock::AMoveAbleRock()
 {
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
@@ -11,18 +15,3 @@ AMoveAbleRock::AMoveAbleRock()
 
 }
 
-// Called when the game starts or when spawned
-void AMoveAbleRock::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void AMoveAbleRock::Tick(float DeltaTime)
-{
-	//SFName rock;
-	Super::Tick(DeltaTime);
-	//Mesh->SetSimulatePhysics(true);
-	//Mesh->SetMassOverrideInKg(rock, weight, true);
-}

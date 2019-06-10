@@ -1,4 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/// <summary>
+/// Old starting point for enemy AI current not used
+/// </summary>
 
 #pragma once
 

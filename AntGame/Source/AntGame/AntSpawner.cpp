@@ -4,8 +4,10 @@
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
 
-
-// Sets default values
+/**
+ * @brief 
+ * Sets default values
+ */
 AAntSpawner::AAntSpawner()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -19,8 +21,10 @@ void AAntSpawner::BeginPlay()
 	Super::BeginPlay();
 	
 }
-
-// Called every frame
+/**
+ * @brief 
+ * Called every frame
+ */ 
 void AAntSpawner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -33,8 +37,10 @@ void AAntSpawner::Tick(float DeltaTime)
 		Spawn();
 	}
 }
-
-//Spawning ants and resetting timer
+/**
+ * @brief 
+ * Spawning ants and resetting timer for the next spawn
+ */
 void AAntSpawner::Spawn()
 {
 	//Set a new delay time min and max time can be set in editor

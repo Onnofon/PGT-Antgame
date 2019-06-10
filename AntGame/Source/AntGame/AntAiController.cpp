@@ -11,20 +11,26 @@
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "MyPawn.h"
 
+/**
+ * @brief 
+ * Initialize Blackboard behavior tree
+ * Initialize keys for the blackboard
+ */
+ 
 AAntAiController::AAntAiController()
 {
-	//Initialize Blackboard behavior tree
 	BehaviorComp = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorComp"));
 	BlackboardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComp"));
-
-	//Initialize Keys
 	PlayerKey = "Target";
 	BridgeKey = "BridgeTarget";
 	LocationToGoKey = "LocationToGo";
 	CurrentPatrolPoint = 0;
 }
 
-//Function to posses the AantAI character and make it follow the behavior tree logic
+/**
+ * @brief 
+ * Function to posses the AantAI character and make it follow the behavior tree logic
+ */
 void AAntAiController::Possess(APawn * Pawn)
 {
 	Super::Possess(Pawn);
@@ -35,41 +41,44 @@ void AAntAiController::Possess(APawn * Pawn)
 	{
 		if (AICharacter->BehaviorTree->BlackboardAsset)
 		{
-			//Intialize the blackboard for the ant
+			// Intialize the blackboard for the ant
 			BlackboardComp->InitializeBlackboard(*(AICharacter->BehaviorTree->BlackboardAsset));
 		}
-		//Get all the Target Points
+		// Get all the Target Points
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAntPatrolPoint::StaticClass(), PatrolPoints);
-
-		//Start the behavior tree
+		// Start the behavior tree with first task(Waypoint following)
 		BehaviorComp->StartTree(*AICharacter->BehaviorTree);
 	}
 }
 
-// Called when ant is commanded to leave the player from AntAI class
+/**
+ * @brief 
+ * Called when ant is commanded to leave the player from AntAI class
+ */
 void AAntAiController::CommandLeavePlayer(APawn * Pawn)
 {
 	AMyPawn* Player = Cast<AMyPawn>(Pawn);
 	if (BlackboardComp)
 	{
-		//Set the playerkey in the blackboard to NULL If PlayerKey is NULL behavior tree goes back to waypoint following
-
 		if (Player->closeByRiver) {
 			BlackboardComp->SetValueAsObject(PlayerKey, NULL);
 			BlackboardComp->SetValueAsVector(BridgeKey, FVector(1600.0f, 270.0f, 30.0f));
 			print("hellooo, river");
 		}
 		else {
+			// Set the playerkey in the blackboard to NULL If PlayerKey is NULL behavior tree goes back to waypoint following \n
 			BlackboardComp->SetValueAsObject(PlayerKey, NULL);
 			print("No river, byee");
 		}
-		//Decrement numberFollowingAnts for interaction with obstacles in game
+		// Decrement numberFollowingAnts for interaction with obstacles in game 
 		Player->numberFollowingAnts--;
 	}
 }
 
-
-//Called when ant is commanded to follow from AntAI
+/**
+ * @brief 
+ * Called when ant is commanded to follow from AntAI
+ */
 void AAntAiController::SetPlayerFollow(APawn * Pawn)
 {
 	AMyPawn* Player = Cast<AMyPawn>(Pawn);

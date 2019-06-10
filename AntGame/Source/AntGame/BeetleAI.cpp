@@ -7,15 +7,20 @@
 #include "Perception/PawnSensingComponent.h"
 #include "DrawDebugHelpers.h"
 
-//Initialize pawnsensing component and set values
+/**
+ * @brief 
+ * Initialize pawnsensing component and set values
+ */
 ABeetleAI::ABeetleAI()
 {
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComp"));
 	PawnSensingComp->SetPeripheralVisionAngle(90.f);
 }
 
-
-//Called when the game starts or when spawned Checks for other actors in his sight.
+/**
+ * @brief 
+ * Called when the game starts or when spawned Checks for other actors in his sight.
+ */
 void ABeetleAI::BeginPlay()
 {
 	Super::BeginPlay();
@@ -26,15 +31,15 @@ void ABeetleAI::BeginPlay()
 	}
 }
 
-//Called when a player has been spotted
+/**
+ * @brief 
+ * Called when a player has been spotted \n
+ * Calls function in AiController class \n
+ * Functions are in the BeetkeAiController class because it has the references to the blackboard and can update the values
+ */
 void ABeetleAI::OnPlayerCaught(APawn * Pawn)
 {
 	ABeetleAIController* AIController = Cast<ABeetleAIController>(GetController());
-
-	/*
-	Call function in AiController class 
-	Functions are in the BeetkeAiController class because it has the references to the blackboard and can update the values
-	*/
 	if (AIController)
 	{
 		printf("You have been caught", *Pawn->GetName());

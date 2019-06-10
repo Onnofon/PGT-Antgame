@@ -1,4 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/// <summary>
+/// Acts at the object in the world and sends information to brain class
+/// </summary>
 
 #pragma once
 
@@ -21,6 +23,8 @@ protected:
 
 public:
 
+	UFUNCTION()
+		void OnPlayerCaught(APawn* Pawn);
 	//A reference to the behavior tree to use it's logic
 	UPROPERTY(EditAnywhere, Category = AI)
 		class UBehaviorTree* BehaviorTree;
@@ -32,7 +36,6 @@ public:
 private:
 
 	//Function to decide what to do when player is in sight
-	UFUNCTION()
-		void OnPlayerCaught(APawn* Pawn);
+	
 
 };

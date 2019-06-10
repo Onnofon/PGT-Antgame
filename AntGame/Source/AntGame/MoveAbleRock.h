@@ -1,4 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/// <summary>
+/// Actor that acts as object that can be pushed by player
+/// </summary>
 
 #pragma once
 
@@ -16,14 +18,10 @@ public:
 	AMoveAbleRock();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
 public:	
 	// Called every frame
 	UPROPERTY(VisibleAnywhere)
 		UStaticMeshComponent* Mesh;
-
-	virtual void Tick(float DeltaTime) override;
 
 };

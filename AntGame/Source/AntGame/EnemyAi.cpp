@@ -76,13 +76,17 @@ void AEnemyAi::Tick(float DeltaTime)
 
 }
 
+/**
+ * @brief 
+ * Function for AI to keep following waypoints
+ */
 void AEnemyAi::MoveToWaypoint() 
 {
 	AEnemyAiController* EnemyAiController = Cast<AEnemyAiController>(GetController());
 
 	if (EnemyAiController) 
 	{
-		//If not reached the end of the waypoints continu loop
+		//If not reached the end of the waypoints continue loop
 		if (CurrentWaypoint <= Waypoints.Num()) 
 		{
 			reachedPoint = false;

@@ -19,7 +19,10 @@ void AMovingObject::BeginPlay()
 	
 }
 
-// Called every frame
+/**
+ * @brief 
+ * Called every frame
+ */
 void AMovingObject::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

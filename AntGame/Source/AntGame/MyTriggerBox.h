@@ -1,4 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/// <summary>
+/// Standard triggerbox for detecting collision
+/// </summary>
 
 #pragma once
 

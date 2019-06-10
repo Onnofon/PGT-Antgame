@@ -1,4 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/// <summary>
+/// Custom node for the behavior tree of the Beetle for following the waypoints from an array(BeetleAiController)
+/// </summary>
 
 #pragma once
 

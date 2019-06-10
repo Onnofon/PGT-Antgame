@@ -8,6 +8,10 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
+/**
+ * @brief 
+ * Setting the blackboard en behavior tree and keys
+ */
 ABeetleAIController::ABeetleAIController()
 {
 	//Initialize Blackboard behavior tree
@@ -19,8 +23,10 @@ ABeetleAIController::ABeetleAIController()
 	LocationToGoKey = "LocationToGo";
 	CurrentPatrolPoint = 0;
 }
-
-//Function to posses the BeetleAI character and make it follow the behavior tree logic
+/**
+ * @brief 
+ * Function to posses the BeetleAI character and make it follow the behavior tree logic
+ */
 void ABeetleAIController::Possess(APawn * Pawn)
 {
 	Super::Possess(Pawn);
@@ -42,7 +48,10 @@ void ABeetleAIController::Possess(APawn * Pawn)
 	}
 }
 
-//Player has been spotted
+/**
+ * @brief 
+ * Function called when player was in sight of the beetle's vision
+ */
 void ABeetleAIController::SetPlayerCaught(APawn * Pawn)
 {
 	if (BlackboardComp)

@@ -1,4 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/// <summary>
+/// First prototype for creating a flying objects with detecting not in use
+/// </summary>
 
 #pragma once
 

@@ -5,6 +5,10 @@
 #include "AntAiController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
+/**
+ * @brief 
+ * Function used for setting next waypoint
+ */
 EBTNodeResult::Type UBTSelectAntPatrolPoint::ExecuteTask(UBehaviorTreeComponent & OwnerComp, uint8 * NodeMemory)
 {
 	AAntAiController* AICon = Cast<AAntAiController>(OwnerComp.GetAIOwner());

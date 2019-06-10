@@ -5,6 +5,10 @@
 #include "BeetleAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
+/**
+ * @brief 
+ * Function used for setting next waypoint
+ */
 EBTNodeResult::Type UBTSelectPatrolPoint::ExecuteTask(UBehaviorTreeComponent & OwnerComp, uint8 * NodeMemory)
 {
 	ABeetleAIController* AICon = Cast<ABeetleAIController>(OwnerComp.GetAIOwner());

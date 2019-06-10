@@ -1,4 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/// <summary>
+/// Acts at the object in the world and sends information to brain class
+/// </summary>
 
 #pragma once
 
@@ -31,12 +33,12 @@ public:
 	//A Pawn Noise sensing component which is used in order hear sounds made by the player
 	UPROPERTY(VisibleAnywhere, Category = AI)
 		class UPawnSensingComponent* PawnSensingComp;
-
-
-private:
-
 	//Function to decide what the ant needs to do when hearing noise
 	UFUNCTION()
 		void OnHearFollowCommand(APawn* Pawn, const FVector &Location, float Volume);
+
+private:
+
+	
 
 };

@@ -1,4 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/// <summary>
+/// Patrol points to set in the world for the ants
+/// </summary>
 
 #pragma once
 

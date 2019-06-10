@@ -1,4 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/// <summary>
+/// EnemyAI class where all the functions are for the actor in game current not in use
+/// </summary>
 
 #pragma once
 
