@@ -48,3 +48,7 @@ private:
 	// either directly or indirectly.
 	
 };
+struct Global
+{
+	static bool Raining;
+};

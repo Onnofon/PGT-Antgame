@@ -11,6 +11,7 @@
 
 int delay;
 int NextCycle;
+bool Global::Raining;
 
 // Sets default values
 AWeatherCycle::AWeatherCycle()
@@ -36,19 +37,20 @@ void AWeatherCycle::BeginPlay()
 	Sun();
 }
 
+
 void AWeatherCycle::Sun() {
 	DynamicMaterial->SetScalarParameterValue(TEXT("CurrentStage"), 1);
 	delay = FMath::FRandRange(minTime, maxTime);
 	RainParticles->SetVisibility(false);
-	
+	Global::Raining = false;
+
 }
 
 void AWeatherCycle::Rain() {
 	DynamicMaterial->SetScalarParameterValue(TEXT("CurrentStage"), 0);
 	delay = FMath::FRandRange(minTime, maxTime);
 	RainParticles->SetVisibility(true);
-	//set rain to active
-
+	Global::Raining = true;
 }
 
 void AWeatherCycle::NextStage() {
