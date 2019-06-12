@@ -33,9 +33,7 @@ void ABeetleAI::BeginPlay()
 
 /**
  * @brief 
- * Called when a player has been spotted \n
- * Calls function in AiController class \n
- * Functions are in the BeetkeAiController class because it has the references to the blackboard and can update the values
+ * Called when a player has been spotted
  */
 void ABeetleAI::OnPlayerCaught(APawn * Pawn)
 {
@@ -43,6 +41,8 @@ void ABeetleAI::OnPlayerCaught(APawn * Pawn)
 	if (AIController)
 	{
 		printf("You have been caught", *Pawn->GetName());
+		// Calls function in AiController class
+        // Functions are in the BeetkeAiController class because it has the references to the blackboard and can update the values
 		AIController->SetPlayerCaught(Pawn);
 	}
 }

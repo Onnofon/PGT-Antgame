@@ -1,5 +1,5 @@
 /// <summary>
-/// Brain class for the Ant AI communicates with the behavior tree
+/// Brain class for the Ant AI communicates with the behavior tree \n Inherits from AIController for Possessing and easier Behavior tree support
 /// </summary>
 #pragma once
 

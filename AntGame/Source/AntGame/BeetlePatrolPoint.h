@@ -1,5 +1,5 @@
 /// <summary>
-/// Patrol points to set in the world for the beetle
+/// Patrol points to set in the world for the beetle \n Inherits from ATargetpoint for a sprite when setting in world
 /// </summary>
 
 #pragma once

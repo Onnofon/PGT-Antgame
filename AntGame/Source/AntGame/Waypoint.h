@@ -1,5 +1,5 @@
 /// <summary>
-/// Patrol points to set in the world for the enemy
+/// Patrol points to set in the world for the enemy not in use
 /// </summary>
 
 #pragma once

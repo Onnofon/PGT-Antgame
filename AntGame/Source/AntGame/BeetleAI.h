@@ -1,5 +1,5 @@
 /// <summary>
-/// Acts at the object in the world and sends information to brain class
+/// Acts at the object in the world and sends information to brain class Inherits from ACharacter because it will be interacting with objects in the game \n Brain class is seperate to avoid making one big class which does everything the brain class also does not need the ACharacter inheritance but instead AIController
 /// </summary>
 
 #pragma once

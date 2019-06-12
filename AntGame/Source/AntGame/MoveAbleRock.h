@@ -1,5 +1,5 @@
 /// <summary>
-/// Actor that acts as object that can be pushed by player
+/// Actor that acts as object that can be pushed by player \n Just the object real changes happen in Player class (Weight)
 /// </summary>
 
 #pragma once

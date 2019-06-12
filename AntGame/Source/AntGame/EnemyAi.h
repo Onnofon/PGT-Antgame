@@ -1,5 +1,5 @@
 /// <summary>
-/// EnemyAI class where all the functions are for the actor in game current not in use
+/// EnemyAI class where all the functions are for the actor in game current not in use \n Inherits from ACharacter because it will be placed in world
 /// </summary>
 
 #pragma once

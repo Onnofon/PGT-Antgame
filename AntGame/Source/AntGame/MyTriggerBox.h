@@ -1,5 +1,5 @@
 /// <summary>
-/// Standard triggerbox for detecting collision
+/// Standard triggerbox for detecting collision \n Inherits from ATriggerBox for detection
 /// </summary>
 
 #pragma once

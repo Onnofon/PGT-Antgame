@@ -1,5 +1,5 @@
 /// <summary>
-/// Custom node for the behavior tree of the Beetle for following the waypoints from an array(BeetleAiController)
+/// Custom node for the behavior tree of the Beetle for following the waypoints from an array(BeetleAiController) \n Inherits from UBBTaskNode because then it shows up in behavior tree
 /// </summary>
 
 #pragma once

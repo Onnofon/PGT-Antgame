@@ -1,5 +1,5 @@
 /// <summary>
-/// Custom node for the behavior tree of the Ant for following the waypoints from an array(AntAiController)
+/// Custom node for the behavior tree of the Ant for following the waypoints from an array(AntAiController) \n Inherits from UBBTaskNode because then it shows up in behavior tree
 /// </summary>
 
 #pragma once

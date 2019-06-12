@@ -1,5 +1,5 @@
 /// <summary>
-/// Objects for spawning the Ant AI blueprints for populating the world
+/// Objects for spawning the Ant AI blueprints for populating the world \n Inherits from Character because will be placed in world.
 /// </summary>
 
 #pragma once
