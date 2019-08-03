@@ -72,3 +72,7 @@ ThirdParty/*
 *.VC.db
 AntGame/.vs/AntGame/v15/Solution.VC.db-wal
 AntGame/.vs/AntGame/v15/Solution.VC.db-shm
+AntGame/.vs/AntGame/v15/ipch/AutoPCH/73472f49af61ec03/WEATHERCYCLE.ipch
+AntGame/.vs/AntGame/v16/Solution.VC.db-shm
+AntGame/.vs/AntGame/v16/Solution.VC.db-wal
+AntGame/.vs/AntGame/v16/ipch/AutoPCH/73472f49af61ec03/WEATHERCYCLE.ipch
